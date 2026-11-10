@@ -1,6 +1,6 @@
 # Apple M1 to M6 benchmarks
 
-Interactive chart of Geekbench 7 (CPU single-core, multi-core, Metal GPU), Geekbench 6 (CPU), Cinebench 2026 and Cinebench 2024 scores for every Apple Silicon chip from M1 to M6, plus a full results table.
+Geekbench and Cinebench scores for every Apple M1 to M6 chip, base to Ultra, on one interactive chart, plus a table with every number.
 
 Live: https://bpetrynski.github.io/apple-m-chips-benchmarks/
 

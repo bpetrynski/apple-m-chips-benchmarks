@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Geekbench 7, Geekbench 6 and Cinebench scores for every Apple M1 to M6 chip (base, Pro, Max, Ultra). Compare M6 vs M1, M5 Ultra vs M3 Ultra and more.">
-<title>Apple M1 to M6 Benchmarks: Geekbench &amp; Cinebench Compared</title>
+<meta name="description" content="Geekbench and Cinebench scores for every Apple M1 to M6 chip, from base to Ultra. Compare M6 vs M5, M6 vs M1 and M5 Ultra vs M3 Ultra on one chart.">
+<title>Apple M1 to M6 benchmarks: Geekbench and Cinebench scores</title>
 <link rel="canonical" href="https://bpetrynski.github.io/apple-m-chips-benchmarks/">
 <meta name="theme-color" content="#f3f4f6" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0a0b0d" media="(prefers-color-scheme: dark)">
@@ -16,14 +16,14 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://bpetrynski.github.io/apple-m-chips-benchmarks/">
 <meta property="og:title" content="Apple M1 to M6 benchmarks: Geekbench and Cinebench">
-<meta property="og:description" content="Geekbench 7, Geekbench 6 and Cinebench scores for every Apple M1 to M6 chip (base, Pro, Max, Ultra). Compare M6 vs M1, M5 Ultra vs M3 Ultra and more.">
+<meta property="og:description" content="Geekbench and Cinebench scores for every Apple M1 to M6 chip, from base to Ultra. Compare M6 vs M5, M6 vs M1 and M5 Ultra vs M3 Ultra on one chart.">
 <meta property="og:image" content="https://bpetrynski.github.io/apple-m-chips-benchmarks/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Dot plot of Geekbench 7 multi-core scores for Apple M1 to M6 chips">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Apple M1 to M6 benchmarks: Geekbench and Cinebench">
-<meta name="twitter:description" content="Geekbench 7, Geekbench 6 and Cinebench scores for every Apple M1 to M6 chip (base, Pro, Max, Ultra). Compare M6 vs M1, M5 Ultra vs M3 Ultra and more.">
+<meta name="twitter:description" content="Geekbench and Cinebench scores for every Apple M1 to M6 chip, from base to Ultra. Compare M6 vs M5, M6 vs M1 and M5 Ultra vs M3 Ultra on one chart.">
 <meta name="twitter:image" content="https://bpetrynski.github.io/apple-m-chips-benchmarks/og-image.png">
 <meta name="twitter:image:alt" content="Dot plot of Geekbench 7 multi-core scores for Apple M1 to M6 chips">
 
@@ -280,8 +280,8 @@ footer a { color: var(--fg-2); }
 <div class="wrap">
   <header>
     <div class="kicker"><span class="gens" aria-hidden="true"><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><i style="--k:4"></i><i style="--k:5"></i></span>Apple Silicon · data as of November 2026</div>
-    <h1>Apple M1 to M6 benchmarks <span class="sub">Geekbench 7, Geekbench 6 and Cinebench on one chart</span></h1>
-    <p class="lede">Each row is a generation, each dot is a chip: base, Pro, Max and Ultra. Switch between Geekbench 7 (CPU and Metal GPU), Geekbench 6, Cinebench 2026 and Cinebench 2024. As of November 2026 only the base M6 has been released.</p>
+    <h1>Apple M1 to M6 benchmarks <span class="sub">Geekbench and Cinebench, every chip on one chart</span></h1>
+    <p class="lede">One row per generation, one dot per chip, from the base model up to the Ultra. The table further down lists every score. As of November 2026 only the base M6 is out.</p>
   </header>
 
   <div class="board">
@@ -322,10 +322,10 @@ footer a { color: var(--fg-2); }
   <section aria-labelledby="takeaways">
     <h2 id="takeaways">Key takeaways</h2>
     <ul class="facts">
-      <li><div class="fig">+83%<small>single-core, M6 vs M1</small></div><p>The base <strong>M6</strong> scores <strong>4,004</strong> in Geekbench 7 single-core vs 2,191 for the M1, and more than any M5 chip (best: M5 Max, 3,733). In Cinebench 2026 single-core it's 824 vs 419, almost exactly 2×.</p></li>
-      <li><div class="fig">2.6×<small>multi-core, M6 vs M1</small></div><p>The base M6 reaches <strong>21,868</strong> in Geekbench 7 multi-core. It beats every M1 and M2 Pro and Max and the M3 Pro, but not the M3 Max, the M4 Pro or any Ultra.</p></li>
-      <li><div class="fig">51,848<small>M5 Ultra, GB7 multi-core</small></div><p>The <strong>M5 Ultra</strong> is the fastest multi-core and GPU chip: 343,652 in Metal and 16,971 in Cinebench 2026 multi-core, 32%, 39% and 40% above the M3 Ultra. There is no M4 Ultra, so the Ultra line goes from M3 straight to M5.</p></li>
-      <li><div class="fig">~7%<small>single-core spread within a generation</small></div><p>All tiers of one generation use the same CPU core design, and Pro, Max and Ultra parts often clock slightly higher. The real differences between them are in multi-core and GPU.</p></li>
+      <li><div class="fig">+83%<small>single-core, M6 vs M1</small></div><p>The base <strong>M6</strong> scores <strong>4,004</strong> in Geekbench 7 single-core. The M1 scored 2,191. No M5 beats it either. The best M5, the Max, scores 3,733. Cinebench 2026 shows the same jump, 824 vs 419, almost exactly double.</p></li>
+      <li><div class="fig">2.6×<small>multi-core, M6 vs M1</small></div><p>In multi-core the base M6 reaches <strong>21,868</strong>. That beats every M1 and M2 Pro and Max, plus the M3 Pro. The M3 Max, the M4 Pro and every Ultra are still faster.</p></li>
+      <li><div class="fig">51,848<small>M5 Ultra, multi-core</small></div><p>The <strong>M5 Ultra</strong> is the fastest chip for multi-core and GPU work. Over the M3 Ultra it gains 32% in Geekbench multi-core, 39% in Metal (343,652) and 40% in Cinebench 2026 (16,971). There's no M4 Ultra, so that jump covers two generations.</p></li>
+      <li><div class="fig">~7%<small>single-core spread inside a generation</small></div><p>Base, Pro, Max and Ultra share the same CPU core design, and some of the bigger chips clock a little higher. A Max gets you more cores and a bigger GPU. It doesn't get you faster cores.</p></li>
     </ul>
   </section>
 
@@ -342,10 +342,10 @@ footer a { color: var(--fg-2); }
   </section>
 
   <section aria-labelledby="alltable">
-    <h2 id="alltable" class="big">Apple M1–M6 benchmark scores: Geekbench 7, Geekbench 6, Cinebench 2026, Cinebench 2024</h2>
+    <h2 id="alltable" class="big">All Apple M1 to M6 benchmark scores</h2>
     <div class="table-wrap" tabindex="0" role="region" aria-labelledby="alltable">
       <table class="full">
-        <caption class="sr">Geekbench 7, Geekbench 6, Cinebench 2026 and Cinebench 2024 scores for Apple M1–M6 chips, best configuration per chip</caption>
+        <caption class="sr">Geekbench and Cinebench scores for Apple M1 to M6 chips, best configuration per chip</caption>
         <thead>
           <tr class="grp"><th></th><th class="cfg"></th><th colspan="3" data-b="gb">Geekbench 7</th><th colspan="2" data-b="gb6">Geekbench 6</th><th colspan="2" data-b="cb26">Cinebench 2026</th><th colspan="2" data-b="cb24">Cinebench 2024</th></tr>
           <tr><th scope="col">Chip</th><th scope="col" class="cfg">Config</th><th scope="col" data-m="gb-single">Single</th><th scope="col" data-m="gb-multi">Multi</th><th scope="col" data-m="gb-metal">Metal</th><th scope="col" data-m="gb6-single">Single</th><th scope="col" data-m="gb6-multi">Multi</th><th scope="col" data-m="cb26-single">Single</th><th scope="col" data-m="cb26-multi">Multi</th><th scope="col" data-m="cb24-single">Single</th><th scope="col" data-m="cb24-multi">Multi</th></tr>
@@ -374,19 +374,19 @@ footer a { color: var(--fg-2); }
         </tbody>
       </table>
     </div>
-    <p class="tnote">– no reliable result · * estimate · Config = CPU / GPU cores of the top Geekbench configuration (Geekbench doesn't report GPU cores for M1 Pro, Max and Ultra)</p>
-    <p class="tnote">Charts as PNG: <a href="images/apple-m1-m6-geekbench-original-layout.png">Geekbench 7 multi-core + Metal</a> · <a href="images/apple-m1-m6-geekbench-single-core-from-zero.png">Geekbench 7 single-core</a> · <a href="images/apple-m1-m6-cinebench-2026.png">Cinebench 2026 multi-core</a> · <a href="images/apple-m1-m6-cinebench-2026-single-core.png">Cinebench 2026 single-core</a> · <a href="images/apple-m1-m6-cinebench.png">Cinebench 2024</a></p>
+    <p class="tnote">– means no reliable result, * means estimate. Config is the CPU and GPU core count of the top Geekbench 7 configuration. Geekbench doesn't report GPU cores for the M1 Pro, Max and Ultra.</p>
+    <p class="tnote">Charts as PNG images. <a href="images/apple-m1-m6-geekbench-original-layout.png">Geekbench 7 multi-core + Metal</a> · <a href="images/apple-m1-m6-geekbench-single-core-from-zero.png">Geekbench 7 single-core</a> · <a href="images/apple-m1-m6-cinebench-2026.png">Cinebench 2026 multi-core</a> · <a href="images/apple-m1-m6-cinebench-2026-single-core.png">Cinebench 2026 single-core</a> · <a href="images/apple-m1-m6-cinebench.png">Cinebench 2024</a></p>
   </section>
 
   <footer>
     <h2>Sources and method</h2>
-    <p><strong>Geekbench 7:</strong> <a href="https://browser.geekbench.com/mac-benchmarks" target="_blank" rel="noopener">Geekbench Browser, Mac Benchmarks</a>, average of submitted results (at least 5 per Mac). For each test the highest-scoring Mac model in the chart is used, so a chip's three Geekbench numbers can come from different Macs. Geekbench 7 uses a different scale than Geekbench 6, so don't compare these numbers with older GB6 charts.</p>
-    <p><strong>Geekbench 6:</strong> Geekbench Browser now lists only Geekbench 7 results, so Geekbench 6 CPU scores come from <a href="https://www.notebookcheck.net/" target="_blank" rel="noopener">notebookcheck.net</a> (averages of the devices they tested, best configuration per test). The M3 Ultra is from cpu-monkey.com. There is no reliable Geekbench 6 result for the M1 Ultra, and no Geekbench 6 Metal data.</p>
-    <p><strong>Cinebench 2026:</strong> <a href="https://www.cpu-monkey.com/" target="_blank" rel="noopener">cpu-monkey.com</a>. Multi-core for M2 Max, M2 Ultra and M3 Pro and single-core for M2 Max, M3 Pro, M5 Pro and M5 Max come from <a href="https://www.notebookcheck.net/" target="_blank" rel="noopener">notebookcheck.net</a>. The M1 Ultra has no measured multi-core result; its value is an estimate from <a href="https://dropandrender.com/cinebench-benchmarks" target="_blank" rel="noopener">Drop &amp; Render</a> (hollow dot). Drop &amp; Render's estimates for other Apple chips mostly come in below measured scores, so the M1 Ultra value is probably on the low side. There's no reliable single-core result for the M1 Ultra and M2 Ultra.</p>
-    <p><strong>Cinebench 2024:</strong> cpu-monkey.com, M5 Ultra from notebookcheck.net. Cinebench 2024 and 2026 use different scales. Because Cinebench values mix two sources, chips with the same CPU (e.g. Pro and Max) can land within noise of each other or swap places.</p>
-    <p>Growth in the tooltip is measured against the same tier in the previous generation that had it. Layout inspired by the chart by u/AlborzDesign.</p>
-    <p>Last updated: <time datetime="2026-11-10">10 November 2026</time>.</p>
-  </footer>
+    <p><strong>Geekbench 7.</strong> From the <a href="https://browser.geekbench.com/mac-benchmarks" target="_blank" rel="noopener">Geekbench Browser Mac chart</a>, which averages user-submitted results (at least 5 per Mac). For each test I took the highest-scoring Mac with that chip, so one chip's three numbers can come from different Macs. Geekbench 7 uses a different scale than Geekbench 6, so don't compare the two.</p>
+    <p><strong>Geekbench 6.</strong> Geekbench Browser now shows only Geekbench 7. The Geekbench 6 CPU scores are averages from the devices <a href="https://www.notebookcheck.net/" target="_blank" rel="noopener">Notebookcheck</a> tested, best configuration per test. The M3 Ultra comes from cpu-monkey.com. I found no reliable Geekbench 6 score for the M1 Ultra and no Geekbench 6 Metal data.</p>
+    <p><strong>Cinebench 2026.</strong> Mostly <a href="https://www.cpu-monkey.com/" target="_blank" rel="noopener">cpu-monkey.com</a>. Notebookcheck fills the gaps: multi-core for the M2 Max, M2 Ultra and M3 Pro, and single-core for the M2 Max, M3 Pro, M5 Pro and M5 Max. I found no measured multi-core result for the M1 Ultra, so it shows an estimate from <a href="https://dropandrender.com/cinebench-benchmarks" target="_blank" rel="noopener">Drop &amp; Render</a> (hollow dot). Their estimates for other Apple chips mostly land below the measured scores, so the real M1 Ultra number is probably higher. There's no reliable single-core score for the M1 Ultra or M2 Ultra.</p>
+    <p><strong>Cinebench 2024.</strong> cpu-monkey.com, plus Notebookcheck for the M5 Ultra. Cinebench 2024 and 2026 use different scales. With two sources mixed, chips that share a CPU, like a Pro and a Max, can swap places by a few points.</p>
+    <p>The growth figure in the tooltip compares a chip with the same tier in the last generation that had one. Layout based on the chart by u/AlborzDesign.</p>
+    <p>Last updated <time datetime="2026-11-10">10 November 2026</time>.</p>
+</footer>
 </div>
 <script>
 const TIERS = [
@@ -670,8 +670,8 @@ if (motionOK) {
 {
  "@context": "https://schema.org",
  "@type": "Dataset",
- "name": "Apple M1–M6 benchmark scores (Geekbench 7, Cinebench 2026, Cinebench 2024)",
- "description": "Geekbench 7 CPU single-core, multi-core and Metal GPU scores, plus Geekbench 6, Cinebench 2026 and Cinebench 2024 CPU scores, for every released Apple M1 to M6 chip tier (base, Pro, Max, Ultra). Best-scoring configuration per chip, data as of November 2026.",
+ "name": "Apple M1 to M6 benchmark scores (Geekbench and Cinebench)",
+ "description": "Geekbench 7 (CPU and Metal), Geekbench 6 (CPU), Cinebench 2026 and Cinebench 2024 scores for every released Apple M1 to M6 chip, from base to Ultra. Best configuration per chip, as of November 2026.",
  "url": "https://bpetrynski.github.io/apple-m-chips-benchmarks/",
  "dateModified": "2026-11-10",
  "temporalCoverage": "2020/2026",

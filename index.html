@@ -434,7 +434,6 @@ function renderTabs() {
   if (refocus) mt.querySelector(`[data-m="${metric}"]`).focus();
 }
 
-const LANE = 14;
 function render(smooth) {
   const m = METRICS[metric];
   const ticks = [];
@@ -477,23 +476,12 @@ function render(smooth) {
       d.el.setAttribute("aria-label", `${chipName(d.g, d.t)}: ${fmt(val)} points, ${fullName(metric)}${d.v.est[metric] ? " (estimate)" : ""}`);
     });
     if (!live.length) { pills[g].style.width = "0"; return; }
-    // Dots closer than ~20px hide each other: split each colliding cluster into lanes (tier order), leave the rest centred
-    const xs = live.map(l => l.x);
-    const sorted = [...live].sort((p, q) => p.x - q.x);
-    const clusters = [];
-    sorted.forEach((l, i) => { if (i && l.x - sorted[i - 1].x < 20) clusters[clusters.length - 1].push(l); else clusters.push([l]); });
-    let maxK = 1;
-    clusters.forEach(c => {
-      maxK = Math.max(maxK, c.length);
-      c.sort((p, q) => TIERS.indexOf(p.d.t) - TIERS.indexOf(q.d.t));
-      c.forEach(({ d }, i) => d.el.style.top = `calc(50% + ${(i - (c.length - 1) / 2) * LANE}px)`);
-    });
-    const crowded = maxK > 1;
-    plot.classList.toggle("crowded", crowded);
-    const lo = Math.min(...xs) / w * 100, hi = Math.max(...xs) / w * 100;
+    // All dots stay on the row's centre line; in crowded rows shrink hit areas so neighbours don't steal taps
+    const xs = live.map(l => l.x).sort((p, q) => p - q);
+    plot.classList.toggle("crowded", xs.some((x, i) => i && x - xs[i - 1] < 20));
+    const lo = xs[0] / w * 100, hi = xs[xs.length - 1] / w * 100;
     pills[g].style.left = `calc(${lo}% - 24px)`;
     pills[g].style.width = `calc(${hi - lo}% + 48px)`;
-    pills[g].style.height = `${34 + (maxK - 1) * LANE}px`;
   });
 
   const all = Object.values(dots).filter(d => d.v[metric] != null);

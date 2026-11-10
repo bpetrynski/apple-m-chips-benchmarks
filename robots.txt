@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bpetrynski.github.io/apple-m-chips-benchmarks/sitemap.xml

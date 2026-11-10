@@ -97,13 +97,10 @@ a:hover { text-decoration-color: currentColor; }
 .num, .mono { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
 
 /* Hero */
-header { display: grid; gap: 18px; max-width: 860px; }
+header { display: grid; gap: 14px; }
 .kicker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font-family: var(--font-data); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-.kicker .gens { display: inline-flex; gap: 4px; }
-.kicker .gens i { width: 22px; height: 6px; border-radius: 3px; background: var(--fg); opacity: calc(.12 + var(--k) * .16); }
 h1 { margin: 0; font-size: clamp(40px, 7vw, 76px); font-weight: 700; letter-spacing: -.045em; line-height: .98; text-wrap: balance; }
 h1 .sub { display: block; margin-top: .22em; font-size: .5em; line-height: 1.1; color: var(--muted); font-weight: 600; letter-spacing: -.03em; }
-.lede { margin: 0; color: var(--fg-2); max-width: 62ch; font-size: 17px; }
 
 /* Controls */
 .board { display: grid; gap: 16px; }
@@ -252,7 +249,6 @@ footer a { color: var(--fg-2); }
 }
 @media (max-width: 760px) {
   .wrap { padding-block: 28px 44px; gap: 40px; }
-  .lede { font-size: 16px; }
   .controls { display: grid; }
   .tabs { display: flex; }
   .tabs button { flex: 1 1 0; padding: 10px 6px; font-size: 13px; }
@@ -279,9 +275,8 @@ footer a { color: var(--fg-2); }
 
 <div class="wrap">
   <header>
-    <div class="kicker"><span class="gens" aria-hidden="true"><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><i style="--k:4"></i><i style="--k:5"></i></span>Apple Silicon · data as of November 2026</div>
+    <div class="kicker">Apple Silicon · data as of November 2026</div>
     <h1>Apple M1 to M6 benchmarks <span class="sub">Geekbench and Cinebench, every chip on one chart</span></h1>
-    <p class="lede">One row per generation, one dot per chip, from the base model up to the Ultra. The table further down lists every score. As of November 2026 only the base M6 is out.</p>
   </header>
 
   <div class="board">

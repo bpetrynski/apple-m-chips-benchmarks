@@ -13,7 +13,7 @@ Best-scoring configuration per chip, data as of November 2026.
 - Geekbench 7: [Geekbench Browser, Mac Benchmarks](https://browser.geekbench.com/mac-benchmarks)
 - Cinebench 2026 / 2024: [cpu-monkey.com](https://www.cpu-monkey.com/), gaps filled from [notebookcheck.net](https://www.notebookcheck.net/); M1 Ultra Cinebench 2026 multi-core is an estimate from [Drop & Render](https://dropandrender.com/cinebench-benchmarks)
 
-All numbers live in the `<table>` in `index.html`; the chart reads them from there. To update a score, edit the cell's `data-v` and its text.
+All numbers live in the `<table>` in `index.html`; the chart reads them from there. To update a score, edit the cell's `data-v` and its text. The "Key takeaways" and "Common comparisons" sections are static text (for search engines), so update their numbers too.
 
 Layout inspired by the chart by u/AlborzDesign.
 

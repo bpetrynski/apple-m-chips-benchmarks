@@ -3,25 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Geekbench 7 and Cinebench 2024/2026 scores for every Apple Silicon chip from M1 to M6 (base, Pro, Max, Ultra) on one interactive chart, plus a full results table.">
-<title>Apple M1 to M6 Benchmarks: Geekbench 7 &amp; Cinebench Scores</title>
+<meta name="description" content="Geekbench 7 and Cinebench 2026/2024 scores for every Apple M1 to M6 chip (base, Pro, Max, Ultra). Compare M6 vs M1, M5 Ultra vs M3 Ultra and more.">
+<title>Apple M1 to M6 Benchmarks: Geekbench 7 &amp; Cinebench Compared</title>
 <link rel="canonical" href="https://bpetrynski.github.io/apple-m-chips-benchmarks/">
-<meta name="robots" content="index, follow">
 <meta name="theme-color" content="#f7f8fa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#121418" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2316181d'/%3E%3Ccircle cx='18' cy='40' r='7' fill='%232a78d6'/%3E%3Ccircle cx='32' cy='30' r='7' fill='%23eb6834'/%3E%3Ccircle cx='46' cy='20' r='7' fill='%23eda100'/%3E%3C/svg%3E">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-48.png" sizes="48x48" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Apple M1–M6 benchmarks">
+<meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://bpetrynski.github.io/apple-m-chips-benchmarks/">
 <meta property="og:title" content="Apple M1 to M6 benchmarks: Geekbench 7 and Cinebench">
-<meta property="og:description" content="Geekbench 7 and Cinebench 2024/2026 scores for every Apple Silicon chip from M1 to M6 (base, Pro, Max, Ultra) on one interactive chart, plus a full results table.">
+<meta property="og:description" content="Geekbench 7 and Cinebench 2026/2024 scores for every Apple M1 to M6 chip (base, Pro, Max, Ultra). Compare M6 vs M1, M5 Ultra vs M3 Ultra and more.">
 <meta property="og:image" content="https://bpetrynski.github.io/apple-m-chips-benchmarks/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Dot plot of Geekbench 7 multi-core scores for Apple M1 to M6 chips">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Apple M1 to M6 benchmarks: Geekbench 7 and Cinebench">
-<meta name="twitter:description" content="Geekbench 7 and Cinebench 2024/2026 scores for every Apple Silicon chip from M1 to M6 (base, Pro, Max, Ultra) on one interactive chart, plus a full results table.">
+<meta name="twitter:description" content="Geekbench 7 and Cinebench 2026/2024 scores for every Apple M1 to M6 chip (base, Pro, Max, Ultra). Compare M6 vs M1, M5 Ultra vs M3 Ultra and more.">
 <meta name="twitter:image" content="https://bpetrynski.github.io/apple-m-chips-benchmarks/og-image.png">
+<meta name="twitter:image:alt" content="Dot plot of Geekbench 7 multi-core scores for Apple M1 to M6 chips">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +37,7 @@
   --panel: #ffffff;
   --fg: #16181d;
   --fg-2: #4a4f5a;
-  --muted: #8a909c;
+  --muted: #6b717c;
   --grid: #e6e8ec;
   --track: #eef0f3;
   --line: #d5d8de;
@@ -62,6 +66,7 @@
 }
 
 body {
+  margin: 0;
   background: var(--bg); color: var(--fg);
   font-family: var(--font-display); font-size: 15px; line-height: 1.5;
 }
@@ -85,7 +90,7 @@ h1 { margin: 0; font-size: clamp(30px, 5vw, 46px); font-weight: 800; letter-spac
   font: 500 14px var(--font-display); color: var(--fg-2); background: transparent;
   border: 0; border-radius: 999px; padding: 8px 16px; cursor: pointer;
 }
-.tabs button[aria-selected="true"] { background: var(--panel); color: var(--fg); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+.tabs button[aria-pressed="true"] { background: var(--panel); color: var(--fg); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
 .tabs button:focus-visible, .dot:focus-visible, .tile:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--fg-2); margin: 0; padding: 0; list-style: none; }
 .legend li { display: inline-flex; align-items: center; gap: 6px; }
@@ -119,14 +124,15 @@ h1 { margin: 0; font-size: clamp(30px, 5vw, 46px); font-weight: 800; letter-spac
 .plot { position: relative; height: 78px; }
 .gl { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--grid); }
 .gl.zero { background: var(--line); }
-.pill { position: absolute; top: 50%; height: 34px; transform: translateY(-50%); background: var(--track); border-radius: 999px; transition: left .5s ease, width .5s ease; }
+.pill { position: absolute; top: 50%; height: 34px; transform: translateY(-50%); background: var(--track); border-radius: 999px; transition: left .5s ease, width .5s ease, height .3s ease; }
 .dot {
   position: absolute; top: 50%; width: 18px; height: 18px; border-radius: 50%;
   transform: translate(-50%, -50%); border: 2px solid var(--panel); padding: 0; cursor: pointer;
-  transition: left .5s ease, transform .15s ease;
+  transition: left .5s ease, top .3s ease, transform .15s ease;
 }
 .dot:hover, .dot.on { transform: translate(-50%, -50%) scale(1.35); z-index: 3; }
 .dot::after { content: ""; position: absolute; inset: -10px; border-radius: 50%; }
+.plot.crowded .dot::after { inset: -3px; }
 
 .axis-row .plot { height: 30px; }
 .tick { position: absolute; top: 4px; transform: translateX(-50%); font-family: var(--font-data); font-size: 12px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; transition: left .5s ease; }
@@ -136,6 +142,7 @@ h1 { margin: 0; font-size: clamp(30px, 5vw, 46px); font-weight: 800; letter-spac
   position: absolute; z-index: 10; pointer-events: none; min-width: 180px;
   background: var(--fg); color: var(--bg); border-radius: 8px; padding: 10px 12px;
   font-size: 13px; line-height: 1.4; transform: translate(-50%, calc(-100% - 14px));
+  width: max-content; max-width: min(280px, calc(100vw - 32px));
 }
 .tip b { display: block; font-size: 15px; }
 .tip .v { font-family: var(--font-data); font-size: 18px; font-variant-numeric: tabular-nums; }
@@ -143,13 +150,13 @@ h1 { margin: 0; font-size: clamp(30px, 5vw, 46px); font-weight: 800; letter-spac
 
 section h2 { font-size: 18px; margin: 0 0 12px; font-weight: 700; }
 .table-wrap { overflow-x: auto; background: var(--panel); border-radius: 14px; }
-table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 14px; }
+table { border-collapse: collapse; width: 100%; min-width: 820px; font-size: 14px; }
 th, td { padding: 9px 14px; text-align: right; border-bottom: 1px solid var(--grid); white-space: nowrap; }
 th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
 thead th { font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
 td.num { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
 td.cur, th.cur { background: var(--track); color: var(--fg); }
-td .sw { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: 1px; }
+.sw { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: 1px; }
 tbody tr:last-child td { border-bottom: 0; }
 td.cfg { color: var(--fg-2); }
 
@@ -161,12 +168,17 @@ figure.chart { margin: 0; }
 .facts { margin: 0; padding-left: 20px; display: grid; gap: 8px; color: var(--fg-2); max-width: 80ch; }
 .facts strong { color: var(--fg); }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-table { min-width: 820px; }
 tbody th { text-align: left; font-weight: 500; padding: 9px 14px; border-bottom: 1px solid var(--grid); white-space: nowrap; }
 tr.grp th { text-align: center; border-bottom: 0; padding-bottom: 0; text-transform: none; letter-spacing: 0; color: var(--fg-2); }
 th.cur[data-b] { background: transparent; color: var(--fg); font-weight: 700; }
 td.na { color: var(--muted); }
 .tnote { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.tnote a { color: var(--fg-2); }
+tbody th, thead tr:last-child th:first-child { position: sticky; left: 0; background: var(--panel); z-index: 1; }
+.table-wrap:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.compare h3 { font-size: 15px; margin: 16px 0 4px; }
+.compare h3:first-of-type { margin-top: 0; }
+.compare p { margin: 0; color: var(--fg-2); max-width: 80ch; }
 footer h2 { font-size: 15px; color: var(--fg-2); margin: 0 0 4px; }
 footer strong { color: var(--fg-2); font-weight: 500; }
 @media (max-width: 760px) {
@@ -174,7 +186,12 @@ footer strong { color: var(--fg-2); font-weight: 500; }
   .tile { display: none; }
   .gen-label { display: block; }
   .chart { padding: 14px 12px 8px; }
-  .axis-note { visibility: hidden; }
+  .axis-note { grid-column: 1 / -1; grid-row: 2; text-align: center; padding-top: 2px; }
+  .switches { justify-items: stretch; width: 100%; }
+  .tabs { display: flex; flex-wrap: nowrap; }
+  .tabs button { flex: 1 1 0; padding: 8px 6px; font-size: 13px; white-space: nowrap; }
+  .wrap { padding-block: 20px 40px; gap: 20px; }
+  .cfg { display: none; }
   .tick { font-size: 10px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
@@ -186,7 +203,7 @@ footer strong { color: var(--fg-2); font-weight: 500; }
   <header>
     <div class="eyebrow" id="eyebrow">Best config per chip · data as of November 2026</div>
     <h1>Apple M1 to M6 benchmarks: Geekbench 7 and Cinebench</h1>
-    <p class="lede">Every Apple Silicon chip from M1 to M6 on one chart. Each row is a generation, each dot is a chip variant: base, Pro, Max and Ultra. Switch between Geekbench 7 (CPU and Metal GPU), Cinebench 2026 and Cinebench 2024. So far M6 exists only as the base chip; M6 Pro, Max and Ultra haven't been released.</p>
+    <p class="lede">Every Apple Silicon chip from M1 to M6 on one chart. Each row is a generation, each dot is a chip variant: base, Pro, Max and Ultra. Switch between Geekbench 7 (CPU and Metal GPU), Cinebench 2026 and Cinebench 2024. As of November 2026 only the base M6 has been released.</p>
   </header>
 
   <div class="controls">
@@ -217,22 +234,36 @@ footer strong { color: var(--fg-2); font-weight: 500; }
   <section aria-labelledby="takeaways">
     <h2 id="takeaways">Key takeaways</h2>
     <ul class="facts">
-      <li>The base <strong>M6</strong> scores <strong>4,004</strong> in Geekbench 7 single-core, 83% more than the M1 (2,191) and higher than any M5 chip (best: M5 Max, 3,733). In Cinebench 2026 single-core it's 824 vs 419 for the M1, almost exactly 2×.</li>
-      <li>In multi-core the base M6 (21,868 in Geekbench 7) is 2.6× the M1 and beats the M2 Max and M3 Pro, but not the M4 Pro.</li>
-      <li>The fastest chip is the <strong>M5 Ultra</strong>: 51,848 in Geekbench 7 multi-core, 343,652 in Metal and 16,971 in Cinebench 2026 multi-core. That's 32% (CPU) and 39% (GPU) more than the M3 Ultra.</li>
-      <li>Within one generation single-core barely changes, because base, Pro, Max and Ultra use the same CPU cores. The differences show up in multi-core and GPU.</li>
-      <li>There is no M4 Ultra. Apple skipped it, so the Ultra line goes from M3 Ultra to M5 Ultra.</li>
+      <li>The base <strong>M6</strong> scores <strong>4,004</strong> in Geekbench 7 single-core, 83% more than the M1 (2,191) and more than any M5 chip (best: M5 Max, 3,733). In Cinebench 2026 single-core it's 824 vs 419 for the M1, almost exactly 2×.</li>
+      <li>In Geekbench 7 multi-core the base M6 (21,868) is 2.6× the M1. It beats every M1 and M2 Pro and Max and the M3 Pro, but not the M3 Max, the M4 Pro or any Ultra.</li>
+      <li>The fastest multi-core and GPU chip is the <strong>M5 Ultra</strong>: 51,848 in Geekbench 7 multi-core, 343,652 in Metal and 16,971 in Cinebench 2026 multi-core. That's 32%, 39% and 40% more than the M3 Ultra.</li>
+      <li>Within one generation single-core moves by at most ~7%: all tiers use the same CPU core design, and Pro, Max and Ultra parts often clock slightly higher. The real differences are in multi-core and GPU.</li>
+      <li>There is no M4 Ultra, so the Ultra line goes M1, M2, M3 Ultra, then M5 Ultra.</li>
     </ul>
   </section>
 
+  <section aria-labelledby="compare" class="compare">
+    <h2 id="compare">Common comparisons</h2>
+      <h3>Apple M6 vs M5</h3>
+      <p>Geekbench 7 single-core 4,004 vs 3,649 (+10%); Geekbench 7 multi-core 21,868 vs 17,951 (+22%); Geekbench 7 Metal 89,357 vs 72,805 (+23%); Cinebench 2026 single-core 824 vs 737 (+12%); Cinebench 2026 multi-core 5,705 vs 4,367 (+31%).</p>
+      <h3>Apple M6 vs M1</h3>
+      <p>Geekbench 7 single-core 4,004 vs 2,191 (+83%); Geekbench 7 multi-core 21,868 vs 8,551 (2.6×); Geekbench 7 Metal 89,357 vs 28,496 (3.1×); Cinebench 2026 single-core 824 vs 419 (+97%); Cinebench 2026 multi-core 5,705 vs 1,722 (3.3×).</p>
+      <h3>Apple M5 Ultra vs M3 Ultra</h3>
+      <p>Geekbench 7 single-core 3,727 vs 2,920 (+28%); Geekbench 7 multi-core 51,848 vs 39,139 (+32%); Geekbench 7 Metal 343,652 vs 247,973 (+39%); Cinebench 2026 single-core 752 vs 573 (+31%); Cinebench 2026 multi-core 16,971 vs 12,082 (+40%).</p>
+      <h3>Apple M5 Max vs M4 Max</h3>
+      <p>Geekbench 7 single-core 3,733 vs 3,497 (+7%); Geekbench 7 multi-core 34,988 vs 29,113 (+20%); Geekbench 7 Metal 240,329 vs 207,103 (+16%); Cinebench 2026 single-core 736 vs 692 (+6%); Cinebench 2026 multi-core 9,278 vs 7,830 (+18%).</p>
+      <h3>Apple M5 Pro vs M4 Pro</h3>
+      <p>Geekbench 7 single-core 3,691 vs 3,367 (+10%); Geekbench 7 multi-core 33,554 vs 24,835 (+35%); Geekbench 7 Metal 137,290 vs 115,619 (+19%); Cinebench 2026 single-core 733 vs 661 (+11%); Cinebench 2026 multi-core 9,440 vs 6,602 (+43%).</p>
+  </section>
+
   <section aria-labelledby="alltable">
-    <h2 id="alltable">All scores</h2>
-    <div class="table-wrap">
+    <h2 id="alltable">Apple M1–M6 benchmark scores (Geekbench 7, Cinebench 2026, Cinebench 2024)</h2>
+    <div class="table-wrap" tabindex="0" role="region" aria-labelledby="alltable">
       <table>
         <caption class="sr">Geekbench 7, Cinebench 2026 and Cinebench 2024 scores for Apple M1–M6 chips, best configuration per chip</caption>
         <thead>
-          <tr class="grp"><th colspan="2"></th><th colspan="3" data-b="gb">Geekbench 7</th><th colspan="2" data-b="cb26">Cinebench 2026</th><th colspan="2" data-b="cb24">Cinebench 2024</th></tr>
-          <tr><th scope="col">Chip</th><th scope="col">Config</th><th scope="col" data-m="gb-single">Single</th><th scope="col" data-m="gb-multi">Multi</th><th scope="col" data-m="gb-metal">Metal</th><th scope="col" data-m="cb26-single">Single</th><th scope="col" data-m="cb26-multi">Multi</th><th scope="col" data-m="cb24-single">Single</th><th scope="col" data-m="cb24-multi">Multi</th></tr>
+          <tr class="grp"><th></th><th class="cfg"></th><th colspan="3" data-b="gb">Geekbench 7</th><th colspan="2" data-b="cb26">Cinebench 2026</th><th colspan="2" data-b="cb24">Cinebench 2024</th></tr>
+          <tr><th scope="col">Chip</th><th scope="col" class="cfg">Config</th><th scope="col" data-m="gb-single">Single</th><th scope="col" data-m="gb-multi">Multi</th><th scope="col" data-m="gb-metal">Metal</th><th scope="col" data-m="cb26-single">Single</th><th scope="col" data-m="cb26-multi">Multi</th><th scope="col" data-m="cb24-single">Single</th><th scope="col" data-m="cb24-multi">Multi</th></tr>
         </thead>
         <tbody id="tbody">
 <tr data-g="M6" data-t="base" data-cfg="12 CPU / 12 GPU"><th scope="row"><span class="sw" style="background:var(--s-base)"></span>Apple M6</th><td class="cfg">12 CPU / 12 GPU</td><td class="num" data-m="gb-single" data-v="4004">4,004</td><td class="num" data-m="gb-multi" data-v="21868">21,868</td><td class="num" data-m="gb-metal" data-v="89357">89,357</td><td class="num" data-m="cb26-single" data-v="824">824</td><td class="num" data-m="cb26-multi" data-v="5705">5,705</td><td class="num" data-m="cb24-single" data-v="220">220</td><td class="num" data-m="cb24-multi" data-v="1470">1,470</td></tr>
@@ -246,27 +277,29 @@ footer strong { color: var(--fg-2); font-weight: 500; }
 <tr data-g="M3" data-t="base" data-cfg="8 CPU / 10 GPU"><th scope="row"><span class="sw" style="background:var(--s-base)"></span>Apple M3</th><td class="cfg">8 CPU / 10 GPU</td><td class="num" data-m="gb-single" data-v="2771">2,771</td><td class="num" data-m="gb-multi" data-v="11646">11,646</td><td class="num" data-m="gb-metal" data-v="48180">48,180</td><td class="num" data-m="cb26-single" data-v="557">557</td><td class="num" data-m="cb26-multi" data-v="2672">2,672</td><td class="num" data-m="cb24-single" data-v="137">137</td><td class="num" data-m="cb24-multi" data-v="659">659</td></tr>
 <tr data-g="M3" data-t="pro" data-cfg="12 CPU / 18 GPU"><th scope="row"><span class="sw" style="background:var(--s-pro)"></span>Apple M3 Pro</th><td class="cfg">12 CPU / 18 GPU</td><td class="num" data-m="gb-single" data-v="2816">2,816</td><td class="num" data-m="gb-multi" data-v="16944">16,944</td><td class="num" data-m="gb-metal" data-v="77083">77,083</td><td class="num" data-m="cb26-single" data-v="535">535</td><td class="num" data-m="cb26-multi" data-v="4100">4,100</td><td class="num" data-m="cb24-single" data-v="142">142</td><td class="num" data-m="cb24-multi" data-v="1059">1,059</td></tr>
 <tr data-g="M3" data-t="max" data-cfg="16 CPU / 40 GPU"><th scope="row"><span class="sw" style="background:var(--s-max)"></span>Apple M3 Max</th><td class="cfg">16 CPU / 40 GPU</td><td class="num" data-m="gb-single" data-v="2823">2,823</td><td class="num" data-m="gb-multi" data-v="24703">24,703</td><td class="num" data-m="gb-metal" data-v="167187">167,187</td><td class="num" data-m="cb26-single" data-v="560">560</td><td class="num" data-m="cb26-multi" data-v="6740">6,740</td><td class="num" data-m="cb24-single" data-v="141">141</td><td class="num" data-m="cb24-multi" data-v="1607">1,607</td></tr>
-<tr data-g="M3" data-t="ultra" data-cfg="32 CPU / 80 GPU"><th scope="row"><span class="sw" style="background:var(--s-ultra)"></span>Apple M3 Ultra</th><td class="cfg">32 CPU / 80 GPU</td><td class="num" data-m="gb-single" data-v="2922">2,922</td><td class="num" data-m="gb-multi" data-v="39139">39,139</td><td class="num" data-m="gb-metal" data-v="247973">247,973</td><td class="num" data-m="cb26-single" data-v="573">573</td><td class="num" data-m="cb26-multi" data-v="12082">12,082</td><td class="num" data-m="cb24-single" data-v="142">142</td><td class="num" data-m="cb24-multi" data-v="2520">2,520</td></tr>
+<tr data-g="M3" data-t="ultra" data-cfg="32 CPU / 80 GPU"><th scope="row"><span class="sw" style="background:var(--s-ultra)"></span>Apple M3 Ultra</th><td class="cfg">32 CPU / 80 GPU</td><td class="num" data-m="gb-single" data-v="2920">2,920</td><td class="num" data-m="gb-multi" data-v="39139">39,139</td><td class="num" data-m="gb-metal" data-v="247973">247,973</td><td class="num" data-m="cb26-single" data-v="573">573</td><td class="num" data-m="cb26-multi" data-v="12082">12,082</td><td class="num" data-m="cb24-single" data-v="142">142</td><td class="num" data-m="cb24-multi" data-v="2520">2,520</td></tr>
 <tr data-g="M2" data-t="base" data-cfg="8 CPU / 10 GPU"><th scope="row"><span class="sw" style="background:var(--s-base)"></span>Apple M2</th><td class="cfg">8 CPU / 10 GPU</td><td class="num" data-m="gb-single" data-v="2402">2,402</td><td class="num" data-m="gb-multi" data-v="9743">9,743</td><td class="num" data-m="gb-metal" data-v="43540">43,540</td><td class="num" data-m="cb26-single" data-v="470">470</td><td class="num" data-m="cb26-multi" data-v="2316">2,316</td><td class="num" data-m="cb24-single" data-v="120">120</td><td class="num" data-m="cb24-multi" data-v="555">555</td></tr>
 <tr data-g="M2" data-t="pro" data-cfg="12 CPU / 19 GPU"><th scope="row"><span class="sw" style="background:var(--s-pro)"></span>Apple M2 Pro</th><td class="cfg">12 CPU / 19 GPU</td><td class="num" data-m="gb-single" data-v="2423">2,423</td><td class="num" data-m="gb-multi" data-v="16556">16,556</td><td class="num" data-m="gb-metal" data-v="82826">82,826</td><td class="num" data-m="cb26-single" data-v="478">478</td><td class="num" data-m="cb26-multi" data-v="4120">4,120</td><td class="num" data-m="cb24-single" data-v="122">122</td><td class="num" data-m="cb24-multi" data-v="1025">1,025</td></tr>
 <tr data-g="M2" data-t="max" data-cfg="12 CPU / 38 GPU"><th scope="row"><span class="sw" style="background:var(--s-max)"></span>Apple M2 Max</th><td class="cfg">12 CPU / 38 GPU</td><td class="num" data-m="gb-single" data-v="2553">2,553</td><td class="num" data-m="gb-multi" data-v="17316">17,316</td><td class="num" data-m="gb-metal" data-v="145172">145,172</td><td class="num" data-m="cb26-single" data-v="480">480</td><td class="num" data-m="cb26-multi" data-v="4150">4,150</td><td class="num" data-m="cb24-single" data-v="121">121</td><td class="num" data-m="cb24-multi" data-v="1025">1,025</td></tr>
 <tr data-g="M2" data-t="ultra" data-cfg="24 CPU / 76 GPU"><th scope="row"><span class="sw" style="background:var(--s-ultra)"></span>Apple M2 Ultra</th><td class="cfg">24 CPU / 76 GPU</td><td class="num" data-m="gb-single" data-v="2582">2,582</td><td class="num" data-m="gb-multi" data-v="28751">28,751</td><td class="num" data-m="gb-metal" data-v="221104">221,104</td><td class="num na" data-m="cb26-single" title="No reliable result">–</td><td class="num" data-m="cb26-multi" data-v="7500">7,500</td><td class="num" data-m="cb24-single" data-v="126">126</td><td class="num" data-m="cb24-multi" data-v="1918">1,918</td></tr>
 <tr data-g="M1" data-t="base" data-cfg="8 CPU / 8 GPU"><th scope="row"><span class="sw" style="background:var(--s-base)"></span>Apple M1</th><td class="cfg">8 CPU / 8 GPU</td><td class="num" data-m="gb-single" data-v="2191">2,191</td><td class="num" data-m="gb-multi" data-v="8551">8,551</td><td class="num" data-m="gb-metal" data-v="28496">28,496</td><td class="num" data-m="cb26-single" data-v="419">419</td><td class="num" data-m="cb26-multi" data-v="1722">1,722</td><td class="num" data-m="cb24-single" data-v="112">112</td><td class="num" data-m="cb24-multi" data-v="509">509</td></tr>
-<tr data-g="M1" data-t="pro" data-cfg="10 CPU / 16 GPU"><th scope="row"><span class="sw" style="background:var(--s-pro)"></span>Apple M1 Pro</th><td class="cfg">10 CPU / 16 GPU</td><td class="num" data-m="gb-single" data-v="2201">2,201</td><td class="num" data-m="gb-multi" data-v="13914">13,914</td><td class="num" data-m="gb-metal" data-v="65572">65,572</td><td class="num" data-m="cb26-single" data-v="437">437</td><td class="num" data-m="cb26-multi" data-v="3329">3,329</td><td class="num" data-m="cb24-single" data-v="113">113</td><td class="num" data-m="cb24-multi" data-v="802">802</td></tr>
-<tr data-g="M1" data-t="max" data-cfg="10 CPU / 32 GPU"><th scope="row"><span class="sw" style="background:var(--s-max)"></span>Apple M1 Max</th><td class="cfg">10 CPU / 32 GPU</td><td class="num" data-m="gb-single" data-v="2231">2,231</td><td class="num" data-m="gb-multi" data-v="14332">14,332</td><td class="num" data-m="gb-metal" data-v="109071">109,071</td><td class="num" data-m="cb26-single" data-v="438">438</td><td class="num" data-m="cb26-multi" data-v="3135">3,135</td><td class="num" data-m="cb24-single" data-v="112">112</td><td class="num" data-m="cb24-multi" data-v="796">796</td></tr>
-<tr data-g="M1" data-t="ultra" data-cfg="20 CPU / 64 GPU"><th scope="row"><span class="sw" style="background:var(--s-ultra)"></span>Apple M1 Ultra</th><td class="cfg">20 CPU / 64 GPU</td><td class="num" data-m="gb-single" data-v="2220">2,220</td><td class="num" data-m="gb-multi" data-v="23527">23,527</td><td class="num" data-m="gb-metal" data-v="146942">146,942</td><td class="num na" data-m="cb26-single" title="No reliable result">–</td><td class="num" data-m="cb26-multi" data-v="5509" data-est="1" title="Estimate (Drop &amp; Render)">5,509*</td><td class="num" data-m="cb24-single" data-v="114">114</td><td class="num" data-m="cb24-multi" data-v="1624">1,624</td></tr>
+<tr data-g="M1" data-t="pro" data-cfg="10 CPU"><th scope="row"><span class="sw" style="background:var(--s-pro)"></span>Apple M1 Pro</th><td class="cfg">10 CPU</td><td class="num" data-m="gb-single" data-v="2201">2,201</td><td class="num" data-m="gb-multi" data-v="13914">13,914</td><td class="num" data-m="gb-metal" data-v="65572">65,572</td><td class="num" data-m="cb26-single" data-v="437">437</td><td class="num" data-m="cb26-multi" data-v="3329">3,329</td><td class="num" data-m="cb24-single" data-v="113">113</td><td class="num" data-m="cb24-multi" data-v="802">802</td></tr>
+<tr data-g="M1" data-t="max" data-cfg="10 CPU"><th scope="row"><span class="sw" style="background:var(--s-max)"></span>Apple M1 Max</th><td class="cfg">10 CPU</td><td class="num" data-m="gb-single" data-v="2231">2,231</td><td class="num" data-m="gb-multi" data-v="14332">14,332</td><td class="num" data-m="gb-metal" data-v="109071">109,071</td><td class="num" data-m="cb26-single" data-v="438">438</td><td class="num" data-m="cb26-multi" data-v="3135">3,135</td><td class="num" data-m="cb24-single" data-v="112">112</td><td class="num" data-m="cb24-multi" data-v="796">796</td></tr>
+<tr data-g="M1" data-t="ultra" data-cfg="20 CPU"><th scope="row"><span class="sw" style="background:var(--s-ultra)"></span>Apple M1 Ultra</th><td class="cfg">20 CPU</td><td class="num" data-m="gb-single" data-v="2220">2,220</td><td class="num" data-m="gb-multi" data-v="23527">23,527</td><td class="num" data-m="gb-metal" data-v="146942">146,942</td><td class="num na" data-m="cb26-single" title="No reliable result">–</td><td class="num" data-m="cb26-multi" data-v="5509" data-est="1" title="Estimate (Drop &amp; Render)">5,509*</td><td class="num" data-m="cb24-single" data-v="114">114</td><td class="num" data-m="cb24-multi" data-v="1624">1,624</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="tnote">– no reliable result · * estimate · Config is the Geekbench configuration (CPU / GPU cores)</p>
+    <p class="tnote">– no reliable result · * estimate · Config = CPU / GPU cores of the top Geekbench configuration (Geekbench doesn't report GPU cores for M1 Pro, Max and Ultra)</p>
+    <p class="tnote">Download the charts as PNG: <a href="images/apple-m1-m6-geekbench-original-layout.png">Geekbench 7 multi-core + Metal</a> · <a href="images/apple-m1-m6-geekbench-single-core-from-zero.png">Geekbench 7 single-core</a> · <a href="images/apple-m1-m6-cinebench-2026.png">Cinebench 2026 multi-core</a> · <a href="images/apple-m1-m6-cinebench-2026-single-core.png">Cinebench 2026 single-core</a> · <a href="images/apple-m1-m6-cinebench.png">Cinebench 2024</a></p>
   </section>
 
   <footer>
     <h2>Sources and method</h2>
-    <p><strong>Geekbench 7:</strong> <a href="https://browser.geekbench.com/mac-benchmarks" target="_blank" rel="noopener">Geekbench Browser, Mac Benchmarks</a>, average of submitted results. For each chip the best-scoring config and Mac model is used, e.g. the M5 Max is the 18 CPU / 40 GPU version. Geekbench 7 uses a different scale than Geekbench 6, so don't compare these numbers with older GB6 charts.</p>
-    <p><strong>Cinebench 2026:</strong> <a href="https://www.cpu-monkey.com/" target="_blank" rel="noopener">cpu-monkey.com</a>. Multi-core for M2 Max, M2 Ultra and M3 Pro and single-core for M2 Max, M3 Pro, M5 Pro and M5 Max come from <a href="https://www.notebookcheck.net/" target="_blank" rel="noopener">notebookcheck.net</a>. The M1 Ultra has no measured multi-core result; its value is an estimate from <a href="https://dropandrender.com/cinebench-benchmarks" target="_blank" rel="noopener">Drop &amp; Render</a> (hollow dot). There's no reliable single-core result for the M1 Ultra and M2 Ultra.</p>
-    <p><strong>Cinebench 2024:</strong> cpu-monkey.com, M5 Ultra from notebookcheck.net. Cinebench 2024 and 2026 use different scales.</p>
+    <p><strong>Geekbench 7:</strong> <a href="https://browser.geekbench.com/mac-benchmarks" target="_blank" rel="noopener">Geekbench Browser, Mac Benchmarks</a>, average of submitted results (at least 5 per Mac). For each test the highest-scoring Mac model in the chart is used, so a chip's three Geekbench numbers can come from different Macs. Geekbench 7 uses a different scale than Geekbench 6, so don't compare these numbers with older GB6 charts.</p>
+    <p><strong>Cinebench 2026:</strong> <a href="https://www.cpu-monkey.com/" target="_blank" rel="noopener">cpu-monkey.com</a>. Multi-core for M2 Max, M2 Ultra and M3 Pro and single-core for M2 Max, M3 Pro, M5 Pro and M5 Max come from <a href="https://www.notebookcheck.net/" target="_blank" rel="noopener">notebookcheck.net</a>. The M1 Ultra has no measured multi-core result; its value is an estimate from <a href="https://dropandrender.com/cinebench-benchmarks" target="_blank" rel="noopener">Drop &amp; Render</a> (hollow dot). Drop &amp; Render's estimates for other Apple chips mostly come in below measured scores, so the M1 Ultra value is probably on the low side. There's no reliable single-core result for the M1 Ultra and M2 Ultra.</p>
+    <p><strong>Cinebench 2024:</strong> cpu-monkey.com, M5 Ultra from notebookcheck.net. Cinebench 2024 and 2026 use different scales. Because Cinebench values mix two sources, chips with the same CPU (e.g. Pro and Max) can land within noise of each other or swap places.</p>
     <p>Growth in the tooltip is measured against the same tier in the previous generation that had it. Layout inspired by the chart by u/AlborzDesign.</p>
+    <p>Last updated: <time datetime="2026-11-10">10 November 2026</time>.</p>
   </footer>
 </div>
 <script>
@@ -293,6 +326,8 @@ const METRICS = {
 };
 const fullName = k => `${BENCH[METRICS[k].b].name} ${METRICS[k].tab}`;
 const fmt = n => n.toLocaleString("en-US");
+const signed = p => (p >= 0 ? "+" : "") + p + "%";
+const kind = k => k.split("-")[1];
 
 // Data lives in the static table (crawlable); read it back here
 const DATA = {};
@@ -309,17 +344,21 @@ document.querySelectorAll("#tbody tr").forEach(tr => {
 
 const hashKey = location.hash.slice(1);
 let metric = METRICS[hashKey] ? hashKey : "gb-multi";
+// Keep the test type (single / multi) when switching benchmarks; Metal has no Cinebench twin, so fall back to the last CPU test
+let lastCpu = kind(metric) === "metal" ? "multi" : kind(metric);
 
 const rowsEl = document.getElementById("rows");
 const tip = document.getElementById("tip");
 const chart = document.getElementById("chart");
+const tableWrap = document.querySelector(".table-wrap");
 const chipName = (g, t) => g + (t.label ? " " + t.label : "");
 const dots = {}, tiles = {}, pills = {};
 
+// Previous generation of the same tier with a measured (non-estimated) value
 function prevSame(g, tierKey) {
   for (let j = GENS.indexOf(g) + 1; j < GENS.length; j++) {
     const v = DATA[GENS[j]][tierKey];
-    if (v && typeof v === "object" && v[metric] != null) return [GENS[j], v];
+    if (v && typeof v === "object" && v[metric] != null && !v.est[metric]) return [GENS[j], v];
   }
   return null;
 }
@@ -343,7 +382,8 @@ GENS.forEach(g => {
     tile.className = "tile";
     if (v && typeof v === "object") {
       tile.innerHTML = `<span class="chipdot" style="background:var(${t.color})"></span><span class="n">${g}</span>${t.label ? `<span class="t">${t.label}</span>` : ""}`;
-      tile.setAttribute("aria-label", chipName(g, t));
+      tile.setAttribute("aria-hidden", "true");
+      tile.tabIndex = -1; // keyboard users go straight to the dots
       tile.style.setProperty("--hl", `var(${t.color})`);
       const id = g + t.key;
       tiles[id] = tile;
@@ -358,38 +398,44 @@ GENS.forEach(g => {
         el.addEventListener("focus", () => show(id));
         el.addEventListener("mouseleave", hide);
         el.addEventListener("blur", hide);
+        el.addEventListener("pointerup", e => { if (e.pointerType !== "mouse") show(id); });
       });
     } else {
       tile.classList.add("empty");
       tile.tabIndex = -1;
       tile.disabled = true;
       tile.innerHTML = v === "soon" ? `<span class="n">?</span><span class="t">${t.label}</span>` : `<span class="n">×</span><span class="t">no ${t.label}</span>`;
-      tile.title = v === "soon" ? `${chipName(g, t)}: not released yet` : `There is no ${chipName(g, t)}`;
+      tile.title = v === "soon" ? `${chipName(g, t)}: not released as of November 2026` : `There is no ${chipName(g, t)}`;
     }
     gen.appendChild(tile);
   });
   row.append(gen, plot);
   rowsEl.appendChild(row);
 });
+document.addEventListener("pointerdown", e => { if (!e.target.closest(".dot, .tile")) hide(); });
 
 const pct = val => { const [a, b] = METRICS[metric].domain; return ((val - a) / (b - a)) * 100; };
 
 function renderTabs() {
   const m = METRICS[metric];
-  document.querySelectorAll("#benchTabs button").forEach(x => x.setAttribute("aria-selected", x.dataset.b === m.b ? "true" : "false"));
+  const refocus = document.activeElement && document.activeElement.closest && document.activeElement.closest("#metricTabs");
+  document.querySelectorAll("#benchTabs button").forEach(x => x.setAttribute("aria-pressed", x.dataset.b === m.b ? "true" : "false"));
   const mt = document.getElementById("metricTabs");
   mt.innerHTML = "";
   BENCH[m.b].metrics.forEach(k => {
     const btn = document.createElement("button");
-    btn.setAttribute("role", "tab");
-    btn.setAttribute("aria-selected", k === metric ? "true" : "false");
+    btn.type = "button";
+    btn.dataset.m = k;
+    btn.setAttribute("aria-pressed", k === metric ? "true" : "false");
     btn.textContent = METRICS[k].tab;
     btn.addEventListener("click", () => setMetric(k));
     mt.appendChild(btn);
   });
+  if (refocus) mt.querySelector(`[data-m="${metric}"]`).focus();
 }
 
-function render() {
+const LANE = 14;
+function render(smooth) {
   const m = METRICS[metric];
   const ticks = [];
   for (let x = m.domain[0]; x <= m.domain[1]; x += m.step) ticks.push(x);
@@ -417,7 +463,8 @@ function render() {
   document.getElementById("axisnote").textContent = fullName(metric);
 
   GENS.forEach(g => {
-    const vals = [];
+    const plot = pills[g].parentElement, w = plot.clientWidth;
+    const live = [];
     Object.values(dots).filter(d => d.g === g).forEach(d => {
       const val = d.v[metric];
       const missing = val == null;
@@ -425,14 +472,28 @@ function render() {
       tiles[d.g + d.t.key].classList.toggle("dim", missing);
       d.el.classList.toggle("est", !!d.v.est[metric]);
       if (missing) return;
-      vals.push(val);
+      live.push({ d, x: pct(val) / 100 * w });
       d.el.style.left = pct(val) + "%";
       d.el.setAttribute("aria-label", `${chipName(d.g, d.t)}: ${fmt(val)} points, ${fullName(metric)}${d.v.est[metric] ? " (estimate)" : ""}`);
     });
-    if (!vals.length) { pills[g].style.width = "0"; return; }
-    const lo = pct(Math.min(...vals)), hi = pct(Math.max(...vals));
+    if (!live.length) { pills[g].style.width = "0"; return; }
+    // Dots closer than ~20px hide each other: split each colliding cluster into lanes (tier order), leave the rest centred
+    const xs = live.map(l => l.x);
+    const sorted = [...live].sort((p, q) => p.x - q.x);
+    const clusters = [];
+    sorted.forEach((l, i) => { if (i && l.x - sorted[i - 1].x < 20) clusters[clusters.length - 1].push(l); else clusters.push([l]); });
+    let maxK = 1;
+    clusters.forEach(c => {
+      maxK = Math.max(maxK, c.length);
+      c.sort((p, q) => TIERS.indexOf(p.d.t) - TIERS.indexOf(q.d.t));
+      c.forEach(({ d }, i) => d.el.style.top = `calc(50% + ${(i - (c.length - 1) / 2) * LANE}px)`);
+    });
+    const crowded = maxK > 1;
+    plot.classList.toggle("crowded", crowded);
+    const lo = Math.min(...xs) / w * 100, hi = Math.max(...xs) / w * 100;
     pills[g].style.left = `calc(${lo}% - 24px)`;
     pills[g].style.width = `calc(${hi - lo}% + 48px)`;
+    pills[g].style.height = `${34 + (maxK - 1) * LANE}px`;
   });
 
   const all = Object.values(dots).filter(d => d.v[metric] != null);
@@ -440,33 +501,46 @@ function render() {
   const m6 = DATA.M6.base[metric], m5 = DATA.M5.base[metric], m1 = DATA.M1.base[metric];
   document.getElementById("summary").innerHTML =
     `<span>Fastest: ${chipName(top.g, top.t)} <b>${fmt(top.v[metric])}</b></span>` +
-    `<span>M6 vs M5: <b>+${Math.round((m6 / m5 - 1) * 100)}%</b></span>` +
+    `<span>M6 vs M5: <b>${signed(Math.round((m6 / m5 - 1) * 100))}</b></span>` +
     `<span>M6 vs M1: <b>${(m6 / m1).toFixed(1)}×</b></span>`;
   document.getElementById("eyebrow").textContent = `${fullName(metric)} · best config per chip · data as of November 2026`;
 
-  document.querySelectorAll("[data-m]").forEach(c => c.classList.toggle("cur", c.dataset.m === metric));
+  document.querySelectorAll("[data-m]").forEach(c => { if (c.closest("table")) c.classList.toggle("cur", c.dataset.m === metric); });
   document.querySelectorAll("th[data-b]").forEach(c => c.classList.toggle("cur", c.dataset.b === m.b));
+
+  // On narrow screens scroll the table to the selected column
+  const col = document.querySelector("thead th.cur[data-m]");
+  if (tableWrap.scrollWidth > tableWrap.clientWidth && col) {
+    const stickyW = document.querySelector("tbody th").offsetWidth;
+    tableWrap.scrollTo({ left: Math.max(0, col.offsetLeft - stickyW - 8), behavior: smooth ? "smooth" : "auto" });
+  }
 }
 
 function show(id) {
-  const d = dots[id], val = d.v[metric];
-  if (val == null) return;
-  const prev = prevSame(d.g, d.t.key);
-  let delta = "";
-  if (prev) {
-    const p = Math.round((val / prev[1][metric] - 1) * 100);
-    delta = `<div class="s">${p >= 0 ? "+" : ""}${p}% vs ${chipName(prev[0], d.t)}</div>`;
+  const d = dots[id], val = d.v[metric], name = chipName(d.g, d.t);
+  let html;
+  if (val == null) {
+    html = `<b>${name}</b><div class="s">No reliable ${fullName(metric)} result</div>`;
+  } else {
+    const prev = prevSame(d.g, d.t.key);
+    const delta = prev ? `<div class="s">${signed(Math.round((val / prev[1][metric] - 1) * 100))} vs ${chipName(prev[0], d.t)}</div>` : "";
+    const est = d.v.est[metric] ? `<div class="s">Estimate (Drop &amp; Render), no measured result</div>` : "";
+    const cfg = METRICS[metric].b === "gb" ? `<div class="s">${d.v.cfg}</div>` : "";
+    html = `<b>${name}</b><div class="v">${fmt(val)}${d.v.est[metric] ? "*" : ""}</div><div class="s">${fullName(metric)}</div>${cfg}${delta}${est}`;
   }
-  const est = d.v.est[metric] ? `<div class="s">Estimate (Drop &amp; Render), no measured result</div>` : "";
-  const cfg = METRICS[metric].b === "gb" ? ` · ${d.v.cfg}` : "";
-  tip.innerHTML = `<b>${chipName(d.g, d.t)}</b><div class="v">${fmt(val)}${d.v.est[metric] ? "*" : ""}</div><div class="s">${fullName(metric)}${cfg}</div>${delta}${est}`;
-  const cr = chart.getBoundingClientRect(), r = d.el.getBoundingClientRect();
-  let x = r.left + r.width / 2 - cr.left;
-  x = Math.max(100, Math.min(cr.width - 100, x));
-  tip.style.left = x + "px";
-  tip.style.top = (r.top - cr.top) + "px";
+  tip.innerHTML = html;
   tip.hidden = false;
-  d.el.classList.add("on");
+  const anchor = val == null ? tiles[id] : d.el;
+  const cr = chart.getBoundingClientRect(), r = anchor.getBoundingClientRect();
+  const tw = tip.offsetWidth, th = tip.offsetHeight;
+  let x = r.left + r.width / 2 - cr.left;
+  x = Math.max(tw / 2 + 4, Math.min(cr.width - tw / 2 - 4, x));
+  const below = r.top - th - 14 < 0;
+  tip.style.left = x + "px";
+  tip.style.top = ((below ? r.bottom : r.top) - cr.top) + "px";
+  tip.style.transform = below ? "translate(-50%, 14px)" : "translate(-50%, calc(-100% - 14px))";
+  document.querySelectorAll(".dot.on, .tile.on").forEach(n => n.classList.remove("on"));
+  if (val != null) d.el.classList.add("on");
   tiles[id].classList.add("on");
 }
 function hide() {
@@ -480,25 +554,24 @@ function setMetric(k) {
   try { history.replaceState(null, "", "#" + k); } catch (e) {}
   hide();
   renderTabs();
-  render();
+  render(true);
 }
-// Keep the test type (single / multi) when switching benchmarks; Metal has no Cinebench twin, so fall back to the last CPU test
-const kind = k => k.split("-")[1];
-let lastCpu = kind(metric) === "metal" ? "multi" : kind(metric);
 document.querySelectorAll("#benchTabs button").forEach(b => b.addEventListener("click", () => {
   const list = BENCH[b.dataset.b].metrics;
   setMetric(list.find(k => kind(k) === kind(metric)) || list.find(k => kind(k) === lastCpu) || list[0]);
 }));
 window.addEventListener("hashchange", () => { const k = location.hash.slice(1); if (METRICS[k] && k !== metric) setMetric(k); });
+let raf;
+window.addEventListener("resize", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => render(false)); });
 renderTabs();
-render();
+render(false);
 </script>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
  "@type": "Dataset",
  "name": "Apple M1–M6 benchmark scores (Geekbench 7, Cinebench 2026, Cinebench 2024)",
- "description": "Geekbench 7 CPU single-core, multi-core and Metal GPU scores, plus Cinebench 2026 and Cinebench 2024 CPU scores, for every Apple Silicon chip from M1 to M6 (base, Pro, Max and Ultra). Best-scoring configuration per chip, data as of November 2026.",
+ "description": "Geekbench 7 CPU single-core, multi-core and Metal GPU scores, plus Cinebench 2026 and Cinebench 2024 CPU scores, for every released Apple M1 to M6 chip tier (base, Pro, Max, Ultra). Best-scoring configuration per chip, data as of November 2026.",
  "url": "https://bpetrynski.github.io/apple-m-chips-benchmarks/",
  "dateModified": "2026-11-10",
  "temporalCoverage": "2020/2026",
@@ -532,7 +605,14 @@ render();
   "Cinebench 2024 single-core",
   "Cinebench 2024 multi-core"
  ],
- "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creator": {
+  "@type": "Person",
+  "name": "bpetrynski",
+  "url": "https://github.com/bpetrynski"
+ },
+ "datePublished": "2026-11-10",
+ "isAccessibleForFree": true,
+ "measurementTechnique": "Geekbench Browser averages of submitted results (highest-scoring Mac per test); Cinebench results from cpu-monkey.com and notebookcheck.net",
  "image": "https://bpetrynski.github.io/apple-m-chips-benchmarks/og-image.png"
 }
 </script>

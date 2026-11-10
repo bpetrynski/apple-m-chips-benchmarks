@@ -476,12 +476,19 @@ function hide() {
 
 function setMetric(k) {
   metric = k;
+  if (kind(k) !== "metal") lastCpu = kind(k);
   try { history.replaceState(null, "", "#" + k); } catch (e) {}
   hide();
   renderTabs();
   render();
 }
-document.querySelectorAll("#benchTabs button").forEach(b => b.addEventListener("click", () => setMetric(BENCH[b.dataset.b].metrics[0])));
+// Keep the test type (single / multi) when switching benchmarks; Metal has no Cinebench twin, so fall back to the last CPU test
+const kind = k => k.split("-")[1];
+let lastCpu = kind(metric) === "metal" ? "multi" : kind(metric);
+document.querySelectorAll("#benchTabs button").forEach(b => b.addEventListener("click", () => {
+  const list = BENCH[b.dataset.b].metrics;
+  setMetric(list.find(k => kind(k) === kind(metric)) || list.find(k => kind(k) === lastCpu) || list[0]);
+}));
 window.addEventListener("hashchange", () => { const k = location.hash.slice(1); if (METRICS[k] && k !== metric) setMetric(k); });
 renderTabs();
 render();
